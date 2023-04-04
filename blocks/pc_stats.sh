@@ -14,6 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# ==================== RAM ====================
+echo "🖥️ RAM: "
+
 awk '
 /^MemTotal:/ {
 	mem_total=$2
@@ -41,6 +45,28 @@ END {
 	if (total > 0) {
 		pct=used/total*100
 	}
-  printf(" %.1fG/%.1fG (%.f%%)\n", used, total, pct)
+  printf("%.1fG/%.1fG (%.f%%)\n", used, total, pct)
 }
 ' /proc/meminfo
+
+# ==================== CPU ====================
+
+echo " | CPU: "$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]"% "
+
+ICONl=" " # icon for normal temperatures
+ICONn=" " # icon for normal temperatures
+ICONc=" " # icon for critical temperatures
+
+crit=70 # critical temperature
+norm=40 # normal temperatures
+
+read -r temp </sys/class/thermal/thermal_zone1/temp
+temp="${temp%???}"
+
+if [ "$temp" -lt "$norm" ] ; then
+  printf "$ICONl%s°C" "$temp"
+elif [ "$temp" -lt "$crit" ] ; then
+  printf "$ICONn%s°C" "$temp"
+else
+  printf "$ICONc%s°C" "$temp"
+fi

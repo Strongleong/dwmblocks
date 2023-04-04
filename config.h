@@ -2,7 +2,7 @@
 #define PATH(name)                      "/home/strongleong/.local/sources/dwmblocks/blocks/"name
 
 /* buffer size for capturing output of the programs used for updating blocks */
-#define CMDOUTLENGTH                    50
+#define CMDOUTLENGTH                    64
 
 /* DELIMITERENDCHAR must be less than 32.
  * At max, DELIMITERENDCHAR - 1 number of clickable blocks are allowed.
@@ -43,8 +43,7 @@ static const char delimiter[] = { ' ', ' ', ' ', DELIMITERENDCHAR };
 
 static Block blocks[] = {
 /*      pathu                           pathc                           interval        signal */
-        { PATH("cpu_temp.sh"),          PATH("cpu_temp_button.sh"),     1,              1},
-        { PATH("memory.sh"),            PATH("cpu_temp_button.sh"),     1,              2},
-        { PATH("calendar.sh"),          NULL,                           1,              3},
+        { PATH("pc_stats.sh"),          PATH("cpu_temp_button.sh"),     1,              1},
+        { PATH("calendar.sh"),          NULL,                           1,              2},
         { NULL } /* just to mark the end of the array */
 };
